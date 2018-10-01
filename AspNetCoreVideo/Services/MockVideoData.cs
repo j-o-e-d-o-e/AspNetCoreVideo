@@ -7,7 +7,7 @@ namespace AspNetCoreVideo.Services
 {
     public class MockVideoData : IVideoData
     {
-        private readonly IEnumerable<Video> _videos;
+        private readonly List<Video> _videos;
 
         public MockVideoData()
         {
@@ -27,6 +27,12 @@ namespace AspNetCoreVideo.Services
         public Video Get(int id)
         {
             return _videos.FirstOrDefault(video => video.Id.Equals(id));
+        }
+
+        public void Add(Video newVideo)
+        {
+            newVideo.Id = _videos.Max(video => video.Id) + 1;
+            _videos.Add(newVideo);
         }
     }
 }

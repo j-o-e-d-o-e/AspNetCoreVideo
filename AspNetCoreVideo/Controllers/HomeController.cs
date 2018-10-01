@@ -1,6 +1,5 @@
-﻿using System;
-using System.Linq;
-using AspNetCoreVideo.Models;
+﻿using System.Linq;
+using AspNetCoreVideo.Entities;
 using AspNetCoreVideo.Services;
 using AspNetCoreVideo.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -32,13 +31,36 @@ namespace AspNetCoreVideo.Controllers
             var model = _videos.Get(id);
             if (model == null)
                 return RedirectToAction("Index");
-            return View(new VideoViewModel()
+            return View(new VideoViewModel
                 {
                     Id = model.Id,
                     Title = model.Title,
-                    Genre = Enum.GetName(typeof(Genres), model.Genre.ToString())
+                    Genre = model.Genre.ToString()
                 }
             );
+        }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(VideoEditViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var video = new Video
+                {
+                    Title = model.Title,
+                    Genre = model.Genre
+                };
+                _videos.Add(video);
+                return RedirectToAction("Details", new {id = video.Id});
+            }
+
+            return View();
         }
     }
 }
