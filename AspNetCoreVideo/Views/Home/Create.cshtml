@@ -12,7 +12,7 @@
                 <label asp-for="Title"></label>
             </td>
             <td>
-                <input asp-for="Title" />
+                <input asp-for="Title"/>
             </td>
             <td>
                 <span asp-validation-for="Title"></span>
@@ -30,10 +30,12 @@
             </td>
         </tr>
     </table>
-    <input type="submit" value="Create" />
+    <input type="submit" value="Create" style="margin-left: 10px; margin-bottom: 10px;"/>
+
 </form>
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+
 @section footer{
     <div>This is the Create footer</div>}

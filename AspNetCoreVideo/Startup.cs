@@ -36,6 +36,7 @@ namespace AspNetCoreVideo
             //            services.AddSingleton<IMessageService, HardcodedMessageService>();
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<VideoDbContext>();
+            services.AddSpaStaticFiles();
             services.AddMvc();
             services.AddSingleton(provider => Configuration);
             services.AddScoped<IVideoData, SqlVideoData>();
