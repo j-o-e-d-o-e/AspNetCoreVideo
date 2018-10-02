@@ -1,9 +1,11 @@
 ﻿using System.IO;
 using AspNetCoreVideo.Data;
+using AspNetCoreVideo.Entities;
 using AspNetCoreVideo.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,6 +34,8 @@ namespace AspNetCoreVideo
             var conn = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<VideoDbContext>(options => options.UseSqlServer(conn));
             //            services.AddSingleton<IMessageService, HardcodedMessageService>();
+            services.AddIdentity<User, IdentityRole>()
+                .AddEntityFrameworkStores<VideoDbContext>();
             services.AddMvc();
             services.AddSingleton(provider => Configuration);
             services.AddScoped<IVideoData, SqlVideoData>();
@@ -46,6 +50,7 @@ namespace AspNetCoreVideo
 
 //            app.UseStaticFiles();
 //            app.UseMvcWithDefaultRoute();
+            app.UseAuthentication();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

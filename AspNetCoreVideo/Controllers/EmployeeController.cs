@@ -21,7 +21,7 @@ namespace AspNetCoreVideo.Controllers
 //        [Route("[action]")]
         public string Country()
         {
-            return "Germany";
+            return "Sweden";
         }
     }
 }
